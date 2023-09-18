@@ -24,7 +24,7 @@
       
       grist.ready();
       grist.onRecord(function(record) {
-        document.getElementById('readout').innerHTML = record;
+        document.getElementById('readout').innerHTML = "вывод из JS" + toString(record.id);
         postData(record.id);
       });
 
