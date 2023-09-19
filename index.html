@@ -4,31 +4,21 @@
     <meta charset="utf-8">
     <title>onRecord</title>
     <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   </head>
   <body>
     <pre id="readout">Waiting for data...</pre>
     <script>
       grist.ready();
-      
-      function postData(input) {
-        $.ajax({
-          type: "POST",
-          url: "/test.py",
-          data: { param: input },
-          success: callbackFunc
-        });
-      }
 
-      function callbackFunc(response) {
-          // do something with the response
-          console.log(response);
-      }
-  
+      <!-- asdfasdf -->
+      let tableAccountDetail = grist.getTable("AccountDetail")
+      
       grist.onRecord(function(record) {
         document.getElementById('readout').innerHTML = "вывод из JS" + toString(record.id);
         postData(record.id);
       });
+
+      console.log(tableAccountDetail);
 
     </script>
   </body>
