@@ -8,9 +8,9 @@
     <script src="./api.js"></script>
   </head>
   <body>
+    <lable>Код записи: <pre id="work_id"> ntcn 3 </pre></lable>
     <pre id="employee_id"> ntcn 1 </pre>
     <pre id="project_id"> ntcn 2 </pre>
-    <pre id="work_id"> ntcn 3 </pre>
     <script>
       grist.ready();
 
@@ -34,7 +34,7 @@
           console.log("-- Конец вывода ------------------");
           document.getElementById('employee_id').innerHTML = record.employee_id;
           document.getElementById('project_id').innerHTML = record.project_id;
-          document.getElementById('work_id').innerHTML = record.work_id;
+          document.getElementById('work_id').innerHTML = record.id;
         }
       
       });
