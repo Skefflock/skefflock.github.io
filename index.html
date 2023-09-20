@@ -14,10 +14,14 @@
       grist.ready();
 
       <!-- asdfasdf -->
-      const result = await grist.docApi.fetchTable("AccountDetail");
+      async function example() {
+        const tableId = 'AccountDetail';
+        const result = await grist.docApi.fetchTable(tableId);
+        return result;
+      }
     
       console.log("-- Вывод содержимого таблицы -----");
-      console.log(result);
+      console.log(example());
       console.log("-- Конец вывода ------------------");
 
     </script>
