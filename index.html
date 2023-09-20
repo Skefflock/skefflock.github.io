@@ -20,9 +20,6 @@
       }
 
     
-      console.log("-- Вывод содержимого таблицы -----");
-      // console.log(getTableById("AccountDetail"));
-      console.log("-- Конец вывода ------------------");
 
       grist.onRecord(function(record) {
         if (!record) {
@@ -31,7 +28,9 @@
           document.getElementById('work').innerHTML = "";
         }
         else {
-          console.log(record)
+          console.log("-- Вывод содержимого таблицы -----");
+          console.log(record);
+          console.log("-- Конец вывода ------------------");
           document.getElementById('employee').innerHTML = record.employee_id.id;
           document.getElementById('project').innerHTML = record.project_id.id;
           document.getElementById('work').innerHTML = record.work_id.id;
