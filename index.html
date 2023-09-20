@@ -11,7 +11,7 @@
       grist.ready();
 
       <!-- asdfasdf -->
-      let tableAccountDetail = grist.getTable("AccountDetail")
+      let tableAccountDetail = grist.fetchTable("AccountDetail")
       
       grist.onRecord(function(record) {
         document.getElementById('readout').innerHTML = "вывод из JS" + toString(record.id);
