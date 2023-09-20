@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>onRecord</title>
     <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
+    <script src="api_deps.js"></script>
+    <script src="api.js"></script>
   </head>
   <body>
     <pre id="readout">Waiting for data...</pre>
@@ -11,7 +13,8 @@
       grist.ready();
 
       <!-- asdfasdf -->
-      let tableAccountDetail = grist.fetchTable("AccountDetail")
+      const tableId = "AccountDetail";
+      const tableAccountDetail = await grist.docApi.fetchTable(tableId);
       
       grist.onRecord(function(record) {
         document.getElementById('readout').innerHTML = "вывод из JS" + toString(record.id);
