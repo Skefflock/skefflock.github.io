@@ -106,19 +106,25 @@
           document.getElementById('payroll_work').innerHTML = "";
         }
         else {
+          // получение таблицы work_hours
+          const tableWorkHour = getTableById("work_hour");
+
+          // вывод промежуточных данных в консоль
           console.log("-- Вывод содержимого таблицы -----");
-          console.log(record);
+          console.log(tableWorkHour);
           console.log("-- Конец вывода ------------------");
-          document.getElementById('employee_id').innerHTML = record.employee_id;
-          document.getElementById('project_id').innerHTML = record.project_id;
-          document.getElementById('work_id').innerHTML = record.id;
+
+          // вывод данных в таблицу
+          document.getElementById('employee_name').innerHTML = record.employee_id;
+          document.getElementById('project_name').innerHTML = record.project_id;
+          document.getElementById('work_name').innerHTML = record.id;
         }
       
       });
 
     </script>
 
-    <p> Версия виджета 0.0.010 </p>
+    <p> Версия виджета 0.0.012 </p>
     
   </body>
 </html>
