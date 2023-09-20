@@ -7,12 +7,38 @@
     <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
     <script src="./api_deps.js"></script>
     <script src="./api.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
   </head>
   <body>
-    <p> Версия виджета 0.0.002 </p>
-    <span>Код записи: <p id="work_id"> - </p></span>
-    <span>Код сотрудника: <p id="employee_id"> - </p></span>
-    <span>Код проекта: <p id="project_id"> - </p></span>
+    <p> Версия виджета 0.0.003 </p>
+    <table class="pure-table-horizontal">
+      <thead>
+        <tr>
+            <th>Параметр</th>
+            <th>Код</th>
+            <th>Значение</th>
+        </tr>
+      </thead>
+        <tr>
+          <td>Сотрудник</td>
+          <td id="employee_id">-</td>
+          <td id="employee_name">-</td>
+        </tr>
+        <tr>
+          <td>Проект</td>
+          <td id="project_id">-</td>
+          <td id="project_name">-</td>
+        </tr>
+        <tr>
+          <td>Работа</td>
+          <td id="work_id">-</td>
+          <td id="work_name">-</td>
+        </tr>
+      <tbody>
+        
+      </tbody>
+    </table>
+
     <script>
       grist.ready();
 
