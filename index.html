@@ -8,15 +8,16 @@
     <script src="./api.js"></script>
   </head>
   <body>
-    <pre id="readout">Waiting for data...</pre>
+    <pre id="employee">Ожидание данных...</pre>
+    <pre id="project"></pre>
+    <pre id="work"></pre>
     <script>
       grist.ready();
 
-      // <!-- asdfasdf -->
-      // async function getTableById(tableId) {
-      //   const result = await grist.docApi.fetchTable(tableId);
-      //   return result;
-      // }
+      async function getTableById(tableId) {
+        const result = await grist.docApi.fetchTable(tableId);
+        return result;
+      }
 
     
       console.log("-- Вывод содержимого таблицы -----");
@@ -24,7 +25,17 @@
       console.log("-- Конец вывода ------------------");
 
       grist.onRecord(function(record) {
-        document.getElementById('readout').innerHTML = record.id;
+        if (!record) {
+          document.getElementById('employee').innerHTML = "Выберите запись";
+          document.getElementById('project').innerHTML = "";
+          document.getElementById('work').innerHTML = "";
+        }
+        else {
+          document.getElementById('employee').innerHTML = record.employee_id;
+          document.getElementById('project').innerHTML = record.project_id;
+          document.getElementById('work').innerHTML = record.work_id;
+        }
+      
       });
 
     </script>
