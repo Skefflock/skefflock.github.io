@@ -8,19 +8,20 @@
     <script src="./api.js"></script>
   </head>
   <body>
-    <pre id="employee">Ожидание данных...</pre>
-    <pre id="project">проект: </pre>
-    <pre id="work">работа: </pre>
+    <label>Сотрудник: <p id="employee_id">-</p></label>
+    <label>Проект: <p id="project_id">-</p></label>
+    <label>Работа: <p id="work_id">-</p></label>
     <script>
       grist.ready();
 
+      // получение всей таблицы по названию
       async function getTableById(tableId) {
         const result = await grist.docApi.fetchTable(tableId);
         return result;
       }
 
     
-
+      // на изменение выделения привязанной таблицы
       grist.onRecord(function(record) {
         if (!record) {
           document.getElementById('employee').innerHTML = "Выберите запись";
