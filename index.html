@@ -13,7 +13,11 @@
       grist.ready();
 
       <!-- asdfasdf -->
-      const tableId = "AccountDetail";
+      async function example() {
+        const tableId = 'AccountDetail';
+        const result = await grist.docApi.fetchTable(tableId);
+        return result;
+      }
       const tableAccountDetail = await grist.docApi.fetchTable(tableId);
       
       grist.onRecord(function(record) {
@@ -21,8 +25,10 @@
         postData(record.id);
       });
 
+
+      let tableFetch = example();
       console.log("-- Вывод содержимого таблицы -----");
-      console.log(tableAccountDetail);
+      console.log(tableFetch);
       console.log("-- Конец вывода ------------------");
 
     </script>
