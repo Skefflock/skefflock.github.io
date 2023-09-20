@@ -24,7 +24,7 @@
       console.log("-- Конец вывода ------------------");
 
       grist.onRecord(function(record) {
-        document.getElementById('readout').innerHTML = record;
+        document.getElementById('readout').innerHTML = record.id;
       });
 
     </script>
