@@ -14,22 +14,10 @@
       grist.ready();
 
       <!-- asdfasdf -->
-      async function example() {
-        const tableId = 'AccountDetail';
-        const result = await grist.docApi.fetchTable(tableId);
-        return result;
-      }
-      const tableAccountDetail = await grist.docApi.fetchTable(tableId);
-      
-      grist.onRecord(function(record) {
-        document.getElementById('readout').innerHTML = "вывод из JS" + toString(record.id);
-        postData(record.id);
-      });
-
-
-      let tableFetch = example();
+      const result = await grist.docApi.fetchTable("AccountDetail");
+    
       console.log("-- Вывод содержимого таблицы -----");
-      console.log(tableFetch);
+      console.log(result);
       console.log("-- Конец вывода ------------------");
 
     </script>
