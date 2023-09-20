@@ -17,11 +17,15 @@
         const result = await grist.docApi.fetchTable(tableId);
         return result;
       }
-      хуйня
+
     
       console.log("-- Вывод содержимого таблицы -----");
       console.log(getTableById("AccountDetail"));
       console.log("-- Конец вывода ------------------");
+
+      grist.onRecord(function(record) {
+        document.getElementById('readout').innerHTML = record;
+      }
 
     </script>
   </body>
