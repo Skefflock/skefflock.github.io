@@ -45,6 +45,26 @@
           <td id="work_id">-</td>
           <td id="work_name">-</td>
         </tr>
+        <tr>
+          <td>Выплаты в пользу сотрудника всего</td>
+          <td id="payment_total">-</td>
+          <td id="payroll_total">-</td>
+        </tr>
+        <tr>
+          <td>По незакрытым работам</td>
+          <td id="payment_active">-</td>
+          <td id="payroll_active">-</td>
+        </tr>
+        <tr>
+          <td>По текущему проекту</td>
+          <td id="payment_project">-</td>
+          <td id="payroll_project">-</td>
+        </tr>
+        <tr>
+          <td>По текущей работе</td>
+          <td id="payment_work">-</td>
+          <td id="payroll_work">-</td>
+        </tr>
       <tbody>
         
       </tbody>
@@ -60,13 +80,30 @@
         return result; 
       }
 
+      // Используемые таблицы:
+      // - Work_hour
+      // - Works
+      // - Employee
+      // - Project
+      // - AccountDetail
     
       // на изменение выделения привязанной таблицы
       grist.onRecord(function(record) {
         if (!record) {
-          document.getElementById('employee').innerHTML = "Выберите запись";
-          document.getElementById('project').innerHTML = "";
-          document.getElementById('work').innerHTML = "";
+          document.getElementById('employee_id').innerHTML = "";
+          document.getElementById('project_id').innerHTML = "";
+          document.getElementById('work_id').innerHTML = "";
+          document.getElementById('employee_name').innerHTML = "";
+          document.getElementById('project_name').innerHTML = "";
+          document.getElementById('work_name').innerHTML = "";
+          document.getElementById('payment_total').innerHTML = "";
+          document.getElementById('payroll_total').innerHTML = "";
+          document.getElementById('payment_active').innerHTML = "";
+          document.getElementById('payroll_active').innerHTML = "";
+          document.getElementById('payment_project').innerHTML = "";
+          document.getElementById('payroll_project').innerHTML = "";
+          document.getElementById('payment_work').innerHTML = "";
+          document.getElementById('payroll_work').innerHTML = "";
         }
         else {
           console.log("-- Вывод содержимого таблицы -----");
