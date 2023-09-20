@@ -89,6 +89,10 @@
     
       // на изменение выделения привязанной таблицы
       grist.onRecord(function(record) {
+
+        // активная запись
+        console.log(record)
+        
         if (!record) {
           document.getElementById('employee_id').innerHTML = "";
           document.getElementById('project_id').innerHTML = "";
@@ -105,9 +109,11 @@
           document.getElementById('payment_work').innerHTML = "";
           document.getElementById('payroll_work').innerHTML = "";
         }
+
         else {
+
           // получение таблицы work_hours
-          const tableWorkHour = getTableById("work_hour");
+          const tableWorkHour = getTableById("work_hours");
 
           // вывод промежуточных данных в консоль
           console.log("-- Вывод содержимого таблицы -----");
@@ -117,14 +123,16 @@
           // вывод данных в таблицу
           document.getElementById('employee_name').innerHTML = record.employee_id;
           document.getElementById('project_name').innerHTML = record.project_id;
-          document.getElementById('work_name').innerHTML = record.id;
+          document.getElementById('work_id').innerHTML = record.id;
+          document.getElementById('work_name').innerHTML = "";
+          
         }
       
       });
 
     </script>
 
-    <p> Версия виджета 0.0.012 </p>
+    <p> Версия виджета 0.0.013 </p>
     
   </body>
 </html>
