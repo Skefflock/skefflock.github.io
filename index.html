@@ -124,7 +124,7 @@
           document.getElementById('employee_name').innerHTML = record.employee_id;
           document.getElementById('project_name').innerHTML = record.project_id;
           document.getElementById('work_id').innerHTML = record.id;
-          document.getElementById('work_name').innerHTML = work_id;
+          document.getElementById('work_name').innerHTML = record.work_id;
 
           // поиск и выбор данных в таблицу из базы данных
           let tableWorkHourRow = tableWorkHour.id.findIndex(record.id);
@@ -160,7 +160,7 @@
 
     </script>
 
-    <p> Версия виджета 0.0.014 </p>
+    <p> Версия виджета 0.0.015 </p>
     
   </body>
 </html>
