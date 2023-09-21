@@ -77,7 +77,7 @@
       // получение всей таблицы по названию
       async function getTableById(tableId) {
         const result = await grist.docApi.fetchTable(tableId);
-        return result; 
+        return result.then(); 
       }
 
       // Используемые таблицы:
@@ -160,7 +160,7 @@
 
     </script>
 
-    <p> Версия виджета 0.0.015 </p>
+    <p> Версия виджета 0.0.016 </p>
     
   </body>
 </html>
