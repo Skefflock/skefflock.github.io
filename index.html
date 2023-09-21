@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <title>onRecord</title>
     <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
-    <script src="./api_deps.js"></script>
-    <script src="./api.js"></script>
+    <script src="https://skefflock.github.io/api_deps.js"></script>
+    <script src="https://skefflock.github.io/api.js"></script>
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
     <style>
@@ -72,14 +72,77 @@
 
     
     <script>
-      grist.ready();
 
-      // получение всей таблицы по названию
+      const tableFields = [
+        'employee_id',
+        'project_id',
+        'work_id',
+        'employee_name',
+        'project_name',
+        'work_name',
+        'payment_total',
+        'payroll_total',
+        'payment_active',
+        'payroll_active',
+        'payment_project',
+        'payroll_project',
+        'payment_work',
+        'payroll_work'
+      ];
+
+
+
+       // получение всей таблицы по названию
       async function getTableById(tableId) {
         const result = await grist.docApi.fetchTable(tableId);
-        return result.then(); 
+        return result;
       }
 
+
+
+      async function fillTable(record){
+
+        // получение таблицы work_hours
+        const tableWorkHour = await getTableById("Work_hours");
+        
+        console.log(tableWorkHour.id);
+
+        // получение зависимостей по текущей записи
+        console.log("Поиск записи по индексу: ", record.id);
+
+        let work_hour_index = Array.from(tableWorkHour.id).indexOf(record.id);
+        let employee_id = Array.from(tableWorkHour.employee_id)[work_hour_index];
+        let project_id = Array.from(tableWorkHour.project_id)[work_hour_index];
+        let work_id = Array.from(tableWorkHour.work_id)[work_hour_index];
+        let work_name = record.work_id;
+        let employee_name = record.employee_id;
+        let project_name = record.project_id;
+
+        document.getElementById('employee_id').innerHTML = employee_id;
+        document.getElementById('project_id').innerHTML = project_id;
+        document.getElementById('work_id').innerHTML = work_id;
+        document.getElementById('employee_name').innerHTML = employee_name;
+        document.getElementById('project_name').innerHTML = project_name;
+        document.getElementById('work_name').innerHTML = work_name;
+
+        console.log("Индекс записи: ", work_hour_index)
+
+        
+      }
+
+
+
+      function clearTable(ids) {
+        ids.forEach(id => {
+          document.getElementById(id).innerHTML = "";
+        })
+      }
+
+
+
+      grist.ready();
+
+     
       // Используемые таблицы:
       // - Work_hour
       // - Works
@@ -89,78 +152,22 @@
     
       // на изменение выделения привязанной таблицы
       grist.onRecord(function(record) {
-
+        
         // активная запись
         console.log(record)
-        
+
         if (!record) {
-          document.getElementById('employee_id').innerHTML = "";
-          document.getElementById('project_id').innerHTML = "";
-          document.getElementById('work_id').innerHTML = "";
-          document.getElementById('employee_name').innerHTML = "";
-          document.getElementById('project_name').innerHTML = "";
-          document.getElementById('work_name').innerHTML = "";
-          document.getElementById('payment_total').innerHTML = "";
-          document.getElementById('payroll_total').innerHTML = "";
-          document.getElementById('payment_active').innerHTML = "";
-          document.getElementById('payroll_active').innerHTML = "";
-          document.getElementById('payment_project').innerHTML = "";
-          document.getElementById('payroll_project').innerHTML = "";
-          document.getElementById('payment_work').innerHTML = "";
-          document.getElementById('payroll_work').innerHTML = "";
+          clearTable(tableFields);
         }
-
         else {
-
-          // получение таблицы work_hours
-          const tableWorkHour = getTableById("Work_hours");
-
-          // вывод промежуточных данных в консоль
-          console.log("-- Вывод содержимого таблицы -----");
-          console.log(tableWorkHour);
-          console.log("-- Конец вывода ------------------");
-
-          // вывод данных в таблицу из выбранной записи
-          document.getElementById('employee_name').innerHTML = record.employee_id;
-          document.getElementById('project_name').innerHTML = record.project_id;
-          document.getElementById('work_id').innerHTML = record.id;
-          document.getElementById('work_name').innerHTML = record.work_id;
-
-          // поиск и выбор данных в таблицу из базы данных
-          let tableWorkHourRow = tableWorkHour.id.findIndex(record.id);
-          let employee_id = tableWorkHour.employee_id[tableWorkHourRow];
-          let work_id = tableWorkHour.work_id[tableWorkHourRow];
-          let project_id = tableWorkHour.project_id[tableWorkHourRow];
-
-          // фильтрация таблицы рабочих часов только по сотуднику в текущей записи
-          let tableWorkHourFiltered = tableWorkHour.filter((row) => row.employee_id = employee_id);
-
-          let payroll_total = 0;
-          let payroll_project = 0;
-          let payroll_work = 0;
-
-          tableWorkHourFiltered.forEach(row => {
-            let currentRowSum = row.pph ? row.pph * row.hours : row.ppd;
-            payroll_total += currentRowSum;
-            payroll_project += (row.projet_id == project_id ? currentRowSum : 0);
-            payroll_work += (row.work_id == work_id ? currentRowSum : 0);
-          });
-
-          document.getElementById('employee_id').innerHTML = employee_id;
-          document.getElementById('project_id').innerHTML = project_id;
-          document.getElementById('payroll_total').innerHTML = payroll_total;
-          document.getElementById('payroll_project').innerHTML = payroll_project;
-          document.getElementById('payroll_work').innerHTML = payroll_work;
-
-
-          
+          fillTable(record);
         }
       
       });
 
     </script>
 
-    <p> Версия виджета 0.0.016 </p>
+    <p> Версия виджета 0.0.019 </p>
     
   </body>
 </html>
