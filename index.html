@@ -127,7 +127,30 @@
 
         console.log("Индекс записи: ", work_hour_index)
 
+
+        // получение таблицы AccountDetail
+        const tableAccountDetail = await getTableById("AccountDetail");
+
+        // формирование многомерного массива со строками из БД
+        // {id, data, time, employee_id, project_id, work_id, sum}
+        let tableAccountDetailRows = [];
+        tableAccountDetail.id.forEach(id => {
+          tableAccountDetailRows.push(
+            tableAccountDetailRows[id].push([{
+              "id": tableAccountDetail.id[id],
+              "employee_id": tableAccountDetail.employee_id[id],
+              "project_id": tableAccountDetail.project_id[id],
+              "work_id": tableAccountDetail.work_id[id],
+              "date": tableAccountDetail.date[id],
+              "time": tableAccountDetail.time[id], 
+              "sum": tableAccountDetail.sum[id],
+              }])
+            );
+        })
+
+        console.log(tableAccountDetailRows.limit(10));
         
+
       }
 
 
@@ -167,7 +190,7 @@
 
     </script>
 
-    <p> Версия виджета 0.0.019 </p>
+    <p> Версия виджета 0.0.020 </p>
     
   </body>
 </html>
