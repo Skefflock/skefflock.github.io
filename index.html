@@ -100,7 +100,7 @@
 
 
 
-      async function fillTable(record){
+      async function fillTable(record) {
 
         // получение таблицы work_hours
         const tableWorkHour = await getTableById("Work_hours");
@@ -110,6 +110,7 @@
         // получение зависимостей по текущей записи
         console.log("Поиск записи по индексу: ", record.id);
 
+        // 
         let work_hour_index = Array.from(tableWorkHour.id).indexOf(record.id);
         let employee_id = Array.from(tableWorkHour.employee_id)[work_hour_index];
         let project_id = Array.from(tableWorkHour.project_id)[work_hour_index];
@@ -118,6 +119,7 @@
         let employee_name = record.employee_id;
         let project_name = record.project_id;
 
+        // вывод значений в документ
         document.getElementById('employee_id').innerHTML = employee_id;
         document.getElementById('project_id').innerHTML = project_id;
         document.getElementById('work_id').innerHTML = work_id;
@@ -125,7 +127,7 @@
         document.getElementById('project_name').innerHTML = project_name;
         document.getElementById('work_name').innerHTML = work_name;
 
-        console.log("Индекс записи: ", work_hour_index)
+        // console.log("Индекс записи: ", work_hour_index)
 
 
         // получение таблицы AccountDetail
@@ -134,23 +136,48 @@
         // формирование многомерного массива со строками из БД
         // {id, data, time, employee_id, project_id, work_id, sum}
         let tableAccountDetailRows = [];
+
+        // объединение раздельных массивов колонок в ассоциативный
         tableAccountDetail.id.forEach(id => {
-          tableAccountDetailRows.push(
-            tableAccountDetailRows[id].push([{
+          // фильтрация данных относящихся только к текущему сотруднику
+          if (tableAccountDetail.employee_id[id] === employee_id) {
+            let sum = parseFloat(tableAccountDetail.sum[id]);
+            tableAccountDetailRows.push({
               "id": tableAccountDetail.id[id],
               "employee_id": tableAccountDetail.employee_id[id],
               "project_id": tableAccountDetail.project_id[id],
               "work_id": tableAccountDetail.work_id[id],
               "date": tableAccountDetail.date[id],
-              "time": tableAccountDetail.time[id], 
-              "sum": tableAccountDetail.sum[id],
-              }])
-            );
+              "time": tableAccountDetail.time[id],
+              "sum": isNaN(sum) ? 0 : sum,
+            });
+          }
+          
         })
 
-        console.log(tableAccountDetailRows.limit(10));
-        
+        // console.log(tableAccountDetailRows);
 
+        // суммирование по показателям
+        let payment_total = 0;
+        let payment_active = 0;
+        let payment_project = 0;
+        let payment_work = 0;
+        // цикл по профильтрованной таблице записей
+        tableAccountDetailRows.forEach(id => {
+          // console.log(id);
+          payment_total += id.sum;
+          console.log(id.id, id.sum, parseFloat(id.sum), payment_total);
+          payment_project += (id.project_id == project_id) ? id.sum : 0;
+          // console.log(payment_project);
+          payment_work += (id.work_id == work_id) ? id.sum : 0;
+          // console.log(payment_work);
+        })
+        // вывод полученных данных
+        document.getElementById('payment_total').innerHTML = payment_total;
+        document.getElementById('payment_project').innerHTML = payment_project;
+        document.getElementById('payment_work').innerHTML = payment_work;
+
+        return true;
       }
 
 
@@ -190,7 +217,7 @@
 
     </script>
 
-    <p> Версия виджета 0.0.020 </p>
+    <p> Версия виджета 0.0.021 </p>
     
   </body>
 </html>
