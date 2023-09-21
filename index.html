@@ -120,11 +120,39 @@
           console.log(tableWorkHour);
           console.log("-- Конец вывода ------------------");
 
-          // вывод данных в таблицу
+          // вывод данных в таблицу из выбранной записи
           document.getElementById('employee_name').innerHTML = record.employee_id;
           document.getElementById('project_name').innerHTML = record.project_id;
           document.getElementById('work_id').innerHTML = record.id;
-          document.getElementById('work_name').innerHTML = "";
+          document.getElementById('work_name').innerHTML = work_id;
+
+          // поиск и выбор данных в таблицу из базы данных
+          let tableWorkHourRow = tableWorkHour.id.findIndex(record.id);
+          let employee_id = tableWorkHour.employee_id[tableWorkHourRow];
+          let work_id = tableWorkHour.work_id[tableWorkHourRow];
+          let project_id = tableWorkHour.project_id[tableWorkHourRow];
+
+          // фильтрация таблицы рабочих часов только по сотуднику в текущей записи
+          let tableWorkHourFiltered = tableWorkHour.filter((row) => row.employee_id = employee_id);
+
+          let payroll_total = 0;
+          let payroll_project = 0;
+          let payroll_work = 0;
+
+          tableWorkHourFiltered.forEach(row => {
+            let currentRowSum = row.pph ? row.pph * row.hours : row.ppd;
+            payroll_total += currentRowSum;
+            payroll_project += (row.projet_id == project_id ? currentRowSum : 0);
+            payroll_work += (row.work_id == work_id ? currentRowSum : 0);
+          });
+
+          document.getElementById('employee_id').innerHTML = employee_id;
+          document.getElementById('project_id').innerHTML = project_id;
+          document.getElementById('payroll_total').innerHTML = payroll_total;
+          document.getElementById('payroll_project').innerHTML = payroll_project;
+          document.getElementById('payroll_work').innerHTML = payroll_work;
+
+
           
         }
       
@@ -132,7 +160,7 @@
 
     </script>
 
-    <p> Версия виджета 0.0.013 </p>
+    <p> Версия виджета 0.0.014 </p>
     
   </body>
 </html>
